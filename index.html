@@ -28,6 +28,10 @@
 body{font-family:Arial,Helvetica,sans-serif;background:var(--bg);color:var(--fg);padding:20px;margin:0}
 h1{margin-top:0}
 table{width:100%;border-collapse:collapse;margin-top:10px}
+.result-table {table-layout: fixed;width: 100%;}
+.result-table td:nth-child(1),
+.result-table td:nth-child(2),
+.result-table td:nth-child(3) {width: 33.33%;}
 th,td{border:1px solid var(--border);padding:6px 8px;text-align:center}
 th{background:#2a2a2a}
 input[type=number],input[type=text]{width:70px;padding:3px;margin-right:4px}
@@ -86,14 +90,14 @@ hr{border:none;border-top:2px dashed #666;margin:40px 0}
 
 <!-- === SCENARIO 1 =================================================== -->
 <h2>Scenario 1 — SQM <span id="lblSQM1">19.5</span></h2>
-<table>
+<table class="result-table">
 <thead><tr><th>Parameter</th><th id="colA1">A</th><th id="colB1">B</th></tr></thead>
 <tbody id="tbody1"></tbody>
 </table>
 
 <!-- === SCENARIO 2 =================================================== -->
 <h2>Scenario 2 — SQM <span id="lblSQM2">21</span></h2>
-<table>
+<table class="result-table">
 <thead><tr><th>Parameter</th><th id="colA2">A</th><th id="colB2">B</th></tr></thead>
 <tbody id="tbody2"></tbody>
 </table>
