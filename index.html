@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <link rel="icon" type="image/x-icon" href="favicon.png">
-<title>Lenses Comparison — Dual SQM (tool + guide)</title>
+<title>Advanced Lens Comparison — Dual SQM (tool + guide)</title>
 <style>
 /* —————–  TEMA DARK PER IL TOOL  —————– */
 :root{--fg:#f0f0f0;--bg:#1b1b1b;--border:#444;--accent:#ff914d}
@@ -35,50 +35,50 @@ hr{border:none;border-top:2px dashed #666;margin:40px 0}
 </head>
 <body>
 
-<h1>Advanced Comparison between Two Lenses — Dual SQM</h1>
+<h1>Advanced Comparison Between Two Lenses — Dual SQM</h1>
 
 <!-- === PARAMETRI GLOBALI =========================================== -->
 <div class="flex">
   QE <input id="qe"  type="number" value="60" min="1"  max="100" step="1"> % |
   SQM 1 <input id="sqm1" type="number" value="19.5" step="0.1" min="18" max="22.5"> |
   SQM 2 <input id="sqm2" type="number" value="21"   step="0.1" min="18" max="22.5"> |
-  Integrazione (h)&nbsp;<input id="integ" type="number" value="2" step="0.1" min="0.1">
+  Integration (h)&nbsp;<input id="integ" type="number" value="2" step="0.1" min="0.1">
 </div>
 
 <!-- === OBIETTIVO A ================================================== -->
-<h3>Obiettivo A</h3>
+<h3>Lens A</h3>
 <div class="flex">
-  Nome <input id="nameA" type="text" value="Samyang 135 mm" style="width:130px"> f/
+  Name <input id="nameA" type="text" value="Samyang 135 mm" style="width:130px"> f/
   <input id="fA" type="number" value="2" step="0.1" min="1"> |
-  T pose (s) <input id="expA" type="number" value="30" step="1" min="1"> |
-  Pausa (s) <input id="pauseA" type="number" value="5" step="1" min="0">
+  Exposure (s) <input id="expA" type="number" value="30" step="1" min="1"> |
+  Pause (s) <input id="pauseA" type="number" value="5" step="1" min="0">
 </div>
 
 <!-- === OBIETTIVO B ================================================== -->
-<h3>Obiettivo B</h3>
+<h3>Lens B</h3>
 <div class="flex">
-  Nome <input id="nameB" type="text" value="Takumar 135 mm" style="width:130px"> f/
+  Name <input id="nameB" type="text" value="Takumar 135 mm" style="width:130px"> f/
   <input id="fB" type="number" value="4" step="0.1" min="1"> |
-  T pose (s) <input id="expB" type="number" value="60" step="1" min="1"> |
-  Pausa (s) <input id="pauseB" type="number" value="10" step="1" min="0">
+  Exposure (s) <input id="expB" type="number" value="60" step="1" min="1"> |
+  Pause (s) <input id="pauseB" type="number" value="10" step="1" min="0">
 </div>
 
 <!-- === SCENARIO 1 =================================================== -->
 <h2>Scenario 1 — SQM <span id="lblSQM1">19.5</span></h2>
 <table>
-<thead><tr><th>Parametro</th><th id="colA1">A</th><th id="colB1">B</th></tr></thead>
+<thead><tr><th>Parameter</th><th id="colA1">A</th><th id="colB1">B</th></tr></thead>
 <tbody id="tbody1"></tbody>
 </table>
 
 <!-- === SCENARIO 2 =================================================== -->
 <h2>Scenario 2 — SQM <span id="lblSQM2">21</span></h2>
 <table>
-<thead><tr><th>Parametro</th><th id="colA2">A</th><th id="colB2">B</th></tr></thead>
+<thead><tr><th>Parameter</th><th id="colA2">A</th><th id="colB2">B</th></tr></thead>
 <tbody id="tbody2"></tbody>
 </table>
 
 <!-- === GRAFICO ====================================================== -->
-<h2>Grafico «Costo (h) vs SQM» per la lente B</h2>
+<h2>Chart «Cost (h) vs SQM» for lens B</h2>
 <canvas id="costChart"></canvas>
 
 <!-- === SCRIPT CORE ================================================== -->
@@ -143,12 +143,12 @@ const sky2 = Math.pow(10, -0.4 * (21.75 - sqm2));
 
   // tabella 1
   tbody1.innerHTML = `
-    <tr><td>Luce per posa (1/f²)</td><td>${fmt(lightPerPose(fA),4)}</td><td>${fmt(lightPerPose(fB),4)}</td></tr>
-    <tr><td>Pose effettive</td><td>${fmt((H*3600)/(expA+pauseA))}</td><td>${fmt((H*3600)/(expB+pauseB))}</td></tr>
-    <tr><td>Segnale totale</td><td>${fmt(totA1)}</td><td>${fmt(totB1)}</td></tr>
+    <tr><td>Light per exposure (1/f²)</td><td>${fmt(lightPerPose(fA),4)}</td><td>${fmt(lightPerPose(fB),4)}</td></tr>
+    <tr><td>Effective exposures</td><td>${fmt((H*3600)/(expA+pauseA))}</td><td>${fmt((H*3600)/(expB+pauseB))}</td></tr>
+    <tr><td>Total signal</td><td>${fmt(totA1)}</td><td>${fmt(totB1)}</td></tr>
     <tr><td>SNR</td><td>${fmt(snrA1)}</td><td>${fmt(snrB1)}</td></tr>
-    <tr><td>Ore per uguagliare A</td><td>—</td><td>${fmt(hoursBtoA1)}</td></tr>
-    <tr><td>Efficienza vs A</td><td>100 %</td><td>${fmt(100*totB1/totA1)} %</td></tr>`;
+    <tr><td>Hours to match A</td><td>—</td><td>${fmt(hoursBtoA1)}</td></tr>
+    <tr><td>Efficiency vs A</td><td>100 %</td><td>${fmt(100*totB1/totA1)} %</td></tr>`;
 
   // Scenario 2 — resa per ora
   const sigPerHourA2 = signalPerHour(fA, expA, pauseA, qe, sky2);
@@ -157,8 +157,8 @@ const sky2 = Math.pow(10, -0.4 * (21.75 - sqm2));
   const hoursBtoA2 = totA1 / sigPerHourB2; // ore con B @SQM2 per raggiungere segnale A @SQM1
 
   tbody2.innerHTML = `
-    <tr><td>Segnale / h</td><td>${fmt(sigPerHourA2)}</td><td>${fmt(sigPerHourB2)}</td></tr>
-    <tr><td>Ore per uguagliare seg. A @ Sc.1</td><td>—</td><td>${fmt(hoursBtoA2)}</td></tr>`;
+    <tr><td>Signal / h</td><td>${fmt(sigPerHourA2)}</td><td>${fmt(sigPerHourB2)}</td></tr>
+    <tr><td>Hours to match signal A @ Sc.1</td><td>—</td><td>${fmt(hoursBtoA2)}</td></tr>`;
 
   // --- Grafico ---
 const xs = [];
@@ -175,7 +175,7 @@ for (let s = 18; s <= 22.5; s += 0.1) {
     const ctx = document.getElementById('costChart').getContext('2d');
     chart = new Chart(ctx, {
       type: 'line',
-      data: { labels: xs, datasets: [{ label: 'Ore per uguagliare A (lente B)', data: ys, borderColor: '#ff914d', backgroundColor: 'transparent', pointRadius: 0 }]},
+      data: { labels: xs, datasets: [{ label: 'Hours to match A (lente B)', data: ys, borderColor: '#ff914d', backgroundColor: 'transparent', pointRadius: 0 }]},
       options: {
         responsive: true,
         scales: {
@@ -239,32 +239,33 @@ window.addEventListener('load', () => {
 <hr>
 <div class="guide" id="guida">
   <!-- copiato e adattato dalla v5 -->
-<h1>Guida Estesa al Tool <em>Confronto Lenti – Dual SQM</em></h1>
+<h1>Extended Guide to the Tool <em>Lens Comparison – Dual SQM</em></h1>
 
-<p>Lo scopo di questo semplice tool è stimare <strong>quante ore di integrazione</strong>
+<p>This standalone guide explains the mathematical and practical functioning of the tool
+<strong>confronto_lenti_dual_sqm.html</strong>. The goal of the tool is to estimate <strong>how many hours of integration</strong>
 sarebbero necessarie con un secondo obiettivo (B) per ottenere lo stesso segnale raccolto
 dal primo obiettivo (A) in due diversi scenari di cielo (<abbr title="Sky Quality Meter">SQM</abbr>).</p>
 
-<h2>1&nbsp;&nbsp;Parametri di ingresso</h2>
+<h2>1&nbsp;&nbsp;Input Parameters</h2>
 
 <table>
-<thead><tr><th>Parametro</th><th>Simbolo / Unità</th><th>Significato pratico</th></tr></thead>
+<thead><tr><th>Parameter</th><th>Simbolo / Unità</th><th>Practical Meaning</th></tr></thead>
 <tbody>
-<tr><td>Apertura (ob.&nbsp;A/B)</td><td><i>f / #</i></td><td>Rapporto focale; più piccolo ⇒ più luce</td></tr>
-<tr><td>Tempo di posa</td><td><i>t</i> [s]</td><td>Durata di un singolo scatto</td></tr>
-<tr><td>Pausa tra pose</td><td><i>p</i> [s]</td><td>Tempo morto (download, dithering, ecc.) – può essere 0</td></tr>
-<tr><td>Integrazione totale (A)</td><td><i>T</i> [h]</td><td>Ore programmate con l’obiettivo A</td></tr>
-<tr><td>QE sensore</td><td>QE [%]</td><td>Efficienza quantica media</td></tr>
+<tr><td>Aperture (lens&nbsp;A/B)</td><td><i>f / #</i></td><td>F-ratio; smaller ⇒ more light</td></tr>
+<tr><td>Exposure time</td><td><i>t</i> [s]</td><td>Duration of a single shot</td></tr>
+<tr><td>Pause between shots</td><td><i>p</i> [s]</td><td>Dead time (download, dithering, etc.) – can be 0</td></tr>
+<tr><td>Total integration (A)</td><td><i>T</i> [h]</td><td>Planned hours with lens A</td></tr>
+<tr><td>Sensor QE</td><td>QE [%]</td><td>Average quantum efficiency</td></tr>
 <tr><td>SQM 1 &amp; SQM 2</td><td>mag / arcsec²</td><td>18 (città) → 22 (dark-sky)</td></tr>
 </tbody>
 </table>
 
-<h2>2&nbsp;&nbsp;Modello matematico</h2>
+<h2>2&nbsp;&nbsp;Mathematical Model</h2>
 
-<h3>2.1 Luce per posa</h3>
+<h3>2.1 Light per exposure</h3>
 <pre>L = 1 / (f/#)²</pre>
 
-<h3>2.2 Segnale per ora</h3>
+<h3>2.2 Signal per hour</h3>
 <pre>S<sub>h</sub> = L × QE × sky × t × 3600 / (t + p)</pre>
 <ul>
   <li><code>sky = 10<sup>−0.4 × (SQM<sub>ref</sub> − SQM)</sup></code> modella la luminosità del cielo su scala esponenziale.</li>
@@ -272,24 +273,24 @@ dal primo obiettivo (A) in due diversi scenari di cielo (<abbr title="Sky Qualit
   <li><code>3600 / (t + p)</code> = quante pose utili entrano in un’ora.</li>
 </ul>
 
-<h3>2.3 Segnale totale di&nbsp;A (scenario 1)</h3>
+<h3>2.3 Total signal di&nbsp;A (scenario 1)</h3>
 <pre>S<sub>A1</sub> = S<sub>h,A1</sub> × T</pre>
 
-<h3>2.4 Ore con&nbsp;B per uguagliare&nbsp;A</h3>
+<h3>2.4 Hours with&nbsp;B to match&nbsp;A</h3>
 <pre>
 T<sub>B1</sub> = S<sub>A1</sub> / S<sub>h,B1</sub>   (stesso cielo)
 T<sub>B2</sub> = S<sub>A1</sub> / S<sub>h,B2</sub>   (SQM diverso)
 </pre>
 
-<h2>3&nbsp;&nbsp;Output del tool</h2>
+<h2>3&nbsp;&nbsp;Tool Output</h2>
 <ul>
-<li><strong>Tabelle Scenario 1 / Scenario 2</strong> – luce per posa, pose effettive, segnale,
+<li><strong>Tables Scenario 1 / Scenario 2</strong> – luce per posa, pose effettive, segnale,
     SNR, ore per uguagliare A.</li>
-<li><strong>Grafico Costo vs SQM</strong> – quante ore (B) servono se il cielo diventa
+<li><strong>Cost vs SQM Chart</strong> – quante ore (B) servono se il cielo diventa
     via via più buio (SQM ↑).</li>
 </ul>
 
-<h2>4&nbsp;&nbsp;Esempio pratico</h2>
+<h2>4&nbsp;&nbsp;Practical Example</h2>
 <div class="note"><b>Input:</b> A = 135 mm f/2, t = 30 s, p = 5 s, QE = 60 %, SQM 1 = 19.5, T = 2 h<br>
 B = 200 mm f/5.6, t = 60 s, p = 10 s</div>
 <ul>
@@ -297,7 +298,7 @@ B = 200 mm f/5.6, t = 60 s, p = 10 s</div>
 <li><b>B in SQM = 21</b> → ore necessarie ≈ 5 h.</li>
 </ul>
 
-<h2>5&nbsp;&nbsp;Limiti e assunzioni</h2>
+<h2>5&nbsp;&nbsp;Limits and Assumptions</h2>
 <ul>
 <li>Non include seeing, vignettatura, filtri, perdite di trasmissione.</li>
 <li>Assume regime <em>sky-limited</em> (rumore di fondo dominante).</li>
@@ -305,23 +306,23 @@ B = 200 mm f/5.6, t = 60 s, p = 10 s</div>
 <li>I risultati sono stime comparative: per progetti critici basarsi su misure reali.</li>
 </ul>
 
-<h2>6&nbsp;&nbsp;Consigli rapidi</h2>
+<h2>6&nbsp;&nbsp;Quick Tips</h2>
 <ol>
-<li>Imposta <b>Pausa = 0</b> solo se scatti davvero senza dead-time.</li>
+<li>Set <b>Pause = 0</b> only if you really shoot without dead-time.</li>
 <li>Per valutare un cielo migliore, duplica l’obiettivo in A e B,
     lascia identici i parametri di scatto, varia SQM 2 e leggi dal grafico
     quante ore risparmi.</li>
-<li>Un campo «—» indica divisione per zero o input non valido.</li>
+<li>A field «—» indicates division by zero or invalid input.</li>
 </ol>
 
-<h2>7&nbsp;&nbsp;Glossario</h2>
+<h2>7&nbsp;&nbsp;Glossary</h2>
 <table>
-<tr><th>Termine</th><th>Definizione</th></tr>
-<tr><td>Segnale</td><td>Elettroni utili accumulati</td></tr>
+<tr><th>Term</th><th>Definition</th></tr>
+<tr><td>Signal</td><td>Useful accumulated electrons</td></tr>
 <tr><td>SNR</td><td>Signal-to-Noise Ratio</td></tr>
 <tr><td>SQM</td><td>Sky Quality Meter (mag/arcsec²)</td></tr>
 <tr><td>QE</td><td>Quantum Efficiency</td></tr>
-<tr><td>Integrazione</td><td>Somma di tutti i tempi di posa utili</td></tr>
+<tr><td>Integration</td><td>Sum of all useful exposure times</td></tr>
 </table>
 
 </body>
