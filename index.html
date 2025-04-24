@@ -1,7 +1,8 @@
 <!DOCTYPE html>
+
 <html lang="it">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <style>
 @media screen and (max-width: 600px) {
   .flex {
@@ -18,9 +19,28 @@
     font-size: 0.85rem !important;
   }
 }
+
+body.night .guide code {
+  background: #110000;
+  color: #f33;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+
+@media screen and (max-width: 600px) {
+  #themeToggle {
+    position: static !important;
+    display: block;
+    margin: 1em auto;
+    width: auto;
+    max-width: 95vw;
+  }
+}
+
 </style>
-<meta charset="UTF-8" />
-<link rel="icon" type="image/x-icon" href="favicon.png">
+<meta charset="utf-8">
+<link href="favicon.png" rel="icon" type="image/x-icon"/>
 <title>Advanced Lens Comparison — Dual SQM (tool + guide)</title>
 <style>
 /* —————–  TEMA DARK PER IL TOOL  —————– */
@@ -55,57 +75,107 @@ hr{border:none;border-top:2px dashed #666;margin:40px 0}
   .guide th{background:#333}
   .guide table,.guide th,.guide td{border-color:#555}
 }
+
+
+body.night {
+  --fg: #f33;
+  --bg: #000;
+  --border: #800;
+  --accent: #f00;
+  background-color: var(--bg);
+  color: var(--fg);
+}
+body.night h1, body.night h2, body.night h3 {
+  color: #f33;
+}
+body.night input, body.night select {
+  background-color: #111;
+  color: #f33;
+  border-color: #800;
+}
+body.night th {
+  background: #200;
+  color: #f33;
+}
+body.night td {
+  color: #f33;
+  border-color: #800;
+}
+body.night canvas {
+  background: #111;
+}
+body.night .guide {
+  background: #000;
+  color: #f33;
+}
+body.night .guide th {
+  background: #200;
+  color: #f33;
+}
+body.night .guide td {
+  border-color: #800;
+  color: #f33;
+}
+body.night .guide h1,
+body.night .guide h2,
+body.night .guide h3 {
+  color: #f33;
+}
+body.night .guide .note {
+  background: #110000;
+  border-left: 4px solid #f33;
+}
+
+body.night .guide code {
+  background: #110000;
+  color: #f33;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-
+</meta></head>
+<body><button id="themeToggle" style="position: fixed; top: 12px; right: 12px; z-index: 999; padding: 0.6em 1em; font-size: 1rem; background: #000; color: #f33; border: 1px solid #f33; border-radius: 6px; cursor: pointer; max-width: 95vw; box-sizing: border-box;">🌙 Night Mode</button>
 <h1>Advanced Comparison Between Two Lenses — Dual SQM</h1>
-
 <!-- === PARAMETRI GLOBALI =========================================== -->
 <div class="flex">
-  QE % <input id="qe"  type="number" value="60" min="1"  max="100" step="1">  
-  SQM 1 <input id="sqm1" type="number" value="19.5" step="0.1" min="18" max="22.5">  
-  SQM 2 <input id="sqm2" type="number" value="21"   step="0.1" min="18" max="22.5">  
-  Integration (h)&nbsp;<input id="integ" type="number" value="2" step="0.1" min="0.1">
+  QE % <input id="qe" max="100" min="1" step="1" type="number" value="60"/>  
+  SQM 1 <input id="sqm1" max="22.5" min="18" step="0.1" type="number" value="19.5"/>  
+  SQM 2 <input id="sqm2" max="22.5" min="18" step="0.1" type="number" value="21"/>  
+  Integration (h) <input id="integ" min="0.1" step="0.1" type="number" value="2"/>
 </div>
-
 <!-- === OBIETTIVO A ================================================== -->
 <h3>Lens A</h3>
 <div class="flex">
-  Name <input id="nameA" type="text" value="Samyang 135 mm"> f/
-  <input id="fA" type="number" value="2" step="0.1" min="1">  
-  Exposure (s) <input id="expA" type="number" value="30" step="1" min="1">  
-  Pause (s) <input id="pauseA" type="number" value="5" step="1" min="0">
+  Name <input id="nameA" type="text" value="Samyang 135 mm"/> f/
+  <input id="fA" min="1" step="0.1" type="number" value="2"/>  
+  Exposure (s) <input id="expA" min="1" step="1" type="number" value="30"/>  
+  Pause (s) <input id="pauseA" min="0" step="1" type="number" value="5"/>
 </div>
-
 <!-- === OBIETTIVO B ================================================== -->
 <h3>Lens B</h3>
 <div class="flex">
-  Name <input id="nameB" type="text" value="Takumar 135 mm"> f/
-  <input id="fB" type="number" value="4" step="0.1" min="1">  
-  Exposure (s) <input id="expB" type="number" value="60" step="1" min="1">  
-  Pause (s) <input id="pauseB" type="number" value="10" step="1" min="0">
+  Name <input id="nameB" type="text" value="Takumar 135 mm"/> f/
+  <input id="fB" min="1" step="0.1" type="number" value="4"/>  
+  Exposure (s) <input id="expB" min="1" step="1" type="number" value="60"/>  
+  Pause (s) <input id="pauseB" min="0" step="1" type="number" value="10"/>
 </div>
-
 <!-- === SCENARIO 1 =================================================== -->
 <h2>Scenario 1 — SQM <span id="lblSQM1">19.5</span></h2>
 <table class="result-table">
 <thead><tr><th>Parameter</th><th id="colA1">A</th><th id="colB1">B</th></tr></thead>
 <tbody id="tbody1"></tbody>
 </table>
-
 <!-- === SCENARIO 2 =================================================== -->
 <h2>Scenario 2 — SQM <span id="lblSQM2">21</span></h2>
 <table class="result-table">
 <thead><tr><th>Parameter</th><th id="colA2">A</th><th id="colB2">B</th></tr></thead>
 <tbody id="tbody2"></tbody>
 </table>
-
 <!-- === GRAFICO ====================================================== -->
 <h2>Chart «Cost (h) vs SQM» for lens B</h2>
 <canvas id="costChart"></canvas>
-
 <!-- === SCRIPT CORE ================================================== -->
 <script>
 let chart;   // Chart.js instance
@@ -200,7 +270,7 @@ for (let s = 18; s <= 22.5; s += 0.1) {
     const ctx = document.getElementById('costChart').getContext('2d');
     chart = new Chart(ctx, {
       type: 'line',
-      data: { labels: xs, datasets: [{ label: 'Hours to match A (lens B)', data: ys, borderColor: '#ff914d', backgroundColor: 'transparent', pointRadius: 0 }]},
+      data: { labels: xs, datasets: [{ label: 'Hours to match A (lens B)', data: ys, borderColor: '#ff3333', backgroundColor: 'transparent', pointRadius: 0 }]},
       options: {
         responsive: true,
         scales: {
@@ -257,24 +327,26 @@ window.addEventListener('load', () => {
   update();
 });
 </script>
-</body>
+<script>
+document.getElementById('themeToggle').addEventListener('click', () => {
+  document.body.classList.toggle('night');
+  document.getElementById('themeToggle').textContent =
+    document.body.classList.contains('night') ? '☀️ Light Mode' : '🌙 Night Mode';
+});
+</script></body>
 </html>
-
 <!-- ===== SEPARATORE E GUIDA IN CALCE ================================ -->
-<hr>
+<hr/>
 <div class="guide" id="guida">
-  <!-- copiato e adattato dalla v5 -->
+<!-- copiato e adattato dalla v5 -->
 <h1>Guide</h1>
-
 <p>The goal of the tool is to estimate <strong>how many hours of integration</strong>
 would be necessary with a second lens (B) to obtain the same signal collected by the first lens (A) in two different sky scenarios (<abbr title="Sky Quality Meter">SQM</abbr>).</p>
-
-<h2>1&nbsp;&nbsp;Input Parameters</h2>
-
+<h2>1  Input Parameters</h2>
 <table>
 <thead><tr><th>Parameter</th><th>Simbolo / Unità</th><th>Practical Meaning</th></tr></thead>
 <tbody>
-<tr><td>Aperture (lens&nbsp;A/B)</td><td><i>f / #</i></td><td>F-ratio; smaller ⇒ more light</td></tr>
+<tr><td>Aperture (lens A/B)</td><td><i>f / #</i></td><td>F-ratio; smaller ⇒ more light</td></tr>
 <tr><td>Exposure time</td><td><i>t</i> [s]</td><td>Duration of a single sub</td></tr>
 <tr><td>Pause between shots</td><td><i>p</i> [s]</td><td>Dead time (download, dithering, etc.) – can be 0</td></tr>
 <tr><td>Total integration (A)</td><td><i>T</i> [h]</td><td>Planned hours with lens A</td></tr>
@@ -282,60 +354,50 @@ would be necessary with a second lens (B) to obtain the same signal collected by
 <tr><td>SQM 1 &amp; SQM 2</td><td>mag / arcsec²</td><td>18 (city) → 22 (dark-sky)</td></tr>
 </tbody>
 </table>
-
-<h2>2&nbsp;&nbsp;Mathematical Model</h2>
-
+<h2>2  Mathematical Model</h2>
 <h3>2.1 Light per exposure</h3>
 <pre>L = 1 / (f/#)²</pre>
-
 <h3>2.2 Signal per hour</h3>
 <pre>S<sub>h</sub> = L × QE × sky × t × 3600 / (t + p)</pre>
 <ul>
-  <li><code>sky = 10<sup>−0.4 × (SQM<sub>ref</sub> − SQM)</sup></code> It moulds the brightness of the sky on an exponential scale.</li>
-  <li>Higer <code>SQM</code> values (darker sky) → lower <code>sky</code> → less background noise → better efficiency.</li>
-  <li><code>3600 / (t + p)</code> = how many useful subs come in an hour.</li>
+<li><code>sky = 10<sup>−0.4 × (SQM<sub>ref</sub> − SQM)</sup></code> It moulds the brightness of the sky on an exponential scale.</li>
+<li>Higer <code>SQM</code> values (darker sky) → lower <code>sky</code> → less background noise → better efficiency.</li>
+<li><code>3600 / (t + p)</code> = how many useful subs come in an hour.</li>
 </ul>
-
-<h3>2.3 Total signal di&nbsp;A (scenario 1)</h3>
+<h3>2.3 Total signal di A (scenario 1)</h3>
 <pre>S<sub>A1</sub> = S<sub>h,A1</sub> × T</pre>
-
-<h3>2.4 Hours with&nbsp;B to match&nbsp;A</h3>
+<h3>2.4 Hours with B to match A</h3>
 <pre>
 T<sub>B1</sub> = S<sub>A1</sub> / S<sub>h,B1</sub>   (same sky)
 T<sub>B2</sub> = S<sub>A1</sub> / S<sub>h,B2</sub>   (different SQM)
 </pre>
-
-<h2>3&nbsp;&nbsp;Tool Output</h2>
+<h2>3  Tool Output</h2>
 <ul>
 <li><strong>Tables Scenario 1 / Scenario 2</strong> – light per sub, actual subs, signal,
     SNR, hours to equalise A.</li>
 <li><strong>Cost vs SQM Chart</strong> – how many hours (B) does it take if the sky becomes gradually darker (SQM ↑).</li>
 </ul>
-
-<h2>4&nbsp;&nbsp;Practical Example</h2>
-<div class="note"><b>Input:</b> A = 135 mm f/2, t = 30 s, p = 5 s, QE = 60 %, SQM 1 = 19.5, T = 2 h<br>
+<h2>4  Practical Example</h2>
+<div class="note"><b>Input:</b> A = 135 mm f/2, t = 30 s, p = 5 s, QE = 60 %, SQM 1 = 19.5, T = 2 h<br/>
 B = 200 mm f/5.6, t = 60 s, p = 10 s</div>
 <ul>
 <li><b>Same sky</b> → need ≈ 8 h with B.</li>
 <li><b>B in SQM = 21</b> → hours needed ≈ 5 h.</li>
 </ul>
-
-<h2>5&nbsp;&nbsp;Limits and Assumptions</h2>
+<h2>5  Limits and Assumptions</h2>
 <ul>
 <li>Does not consider seeing, vignetting, filters, transmission losses.</li>
 <li>It assumes a <em>sky-limited</em> regime (dominant background noise).</li>
 <li>The model uses an exponential scale consistent with the photometric definition of the SQM.</li>
 <li>Results are comparative estimates: for critical projects base on real measures.</li>
 </ul>
-
-<h2>6&nbsp;&nbsp;Quick Tips</h2>
+<h2>6  Quick Tips</h2>
 <ol>
 <li>Set <b>Pause = 0</b> only if you really shoot without dead-time.</li>
 <li>To evaluate a better sky, duplicate the lens in A and B, leave the shooting parameters identical, vary SQM 2 and read from the graph how many hours you save.</li>
 <li>A field «—» indicates division by zero or invalid input.</li>
 </ol>
-
-<h2>7&nbsp;&nbsp;Glossary</h2>
+<h2>7  Glossary</h2>
 <table>
 <tr><th>Term</th><th>Definition</th></tr>
 <tr><td>Signal</td><td>Useful accumulated electrons</td></tr>
@@ -345,5 +407,5 @@ B = 200 mm f/5.6, t = 60 s, p = 10 s</div>
 <tr><td>Integration</td><td>Sum of all useful exposure times</td></tr>
 </table>
 
-</body>
-</html>
+
+</div>
