@@ -243,8 +243,7 @@ window.addEventListener('load', () => {
 
 <p>This standalone guide explains the mathematical and practical functioning of the tool
 <strong>confronto_lenti_dual_sqm.html</strong>. The goal of the tool is to estimate <strong>how many hours of integration</strong>
-sarebbero necessarie con un secondo obiettivo (B) per ottenere lo stesso segnale raccolto
-dal primo obiettivo (A) in due diversi scenari di cielo (<abbr title="Sky Quality Meter">SQM</abbr>).</p>
+would be necessary with a second objective (B) to obtain the same signal collected by the first objective (A) in two different sky scenarios (SQM) (<abbr title="Sky Quality Meter">SQM</abbr>).</p>
 
 <h2>1&nbsp;&nbsp;Input Parameters</h2>
 
@@ -256,7 +255,7 @@ dal primo obiettivo (A) in due diversi scenari di cielo (<abbr title="Sky Qualit
 <tr><td>Pause between shots</td><td><i>p</i> [s]</td><td>Dead time (download, dithering, etc.) – can be 0</td></tr>
 <tr><td>Total integration (A)</td><td><i>T</i> [h]</td><td>Planned hours with lens A</td></tr>
 <tr><td>Sensor QE</td><td>QE [%]</td><td>Average quantum efficiency</td></tr>
-<tr><td>SQM 1 &amp; SQM 2</td><td>mag / arcsec²</td><td>18 (città) → 22 (dark-sky)</td></tr>
+<tr><td>SQM 1 &amp; SQM 2</td><td>mag / arcsec²</td><td>18 (city) → 22 (dark-sky)</td></tr>
 </tbody>
 </table>
 
@@ -268,7 +267,7 @@ dal primo obiettivo (A) in due diversi scenari di cielo (<abbr title="Sky Qualit
 <h3>2.2 Signal per hour</h3>
 <pre>S<sub>h</sub> = L × QE × sky × t × 3600 / (t + p)</pre>
 <ul>
-  <li><code>sky = 10<sup>−0.4 × (SQM<sub>ref</sub> − SQM)</sup></code> modella la luminosità del cielo su scala esponenziale.</li>
+  <li><code>sky = 10<sup>−0.4 × (SQM<sub>ref</sub> − SQM)</sup></code> It moulds the brightness of the sky on an exponential scale.</li>
   <li>Valori di <code>SQM</code> più alti (cielo più buio) → <code>sky</code> più basso → minor rumore di fondo → miglior efficienza.</li>
   <li><code>3600 / (t + p)</code> = quante pose utili entrano in un’ora.</li>
 </ul>
