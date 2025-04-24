@@ -38,7 +38,10 @@ hr{border:none;border-top:2px dashed #666;margin:40px 0}
 /* —————–  GUIDA (tema chiaro per leggibilità)  —————– */
 .guide{background: #ffffff;color: #222;padding: 40px 20px;margin-top: 40px;border-radius: 6px;width: 100%;box-sizing: border-box}
 .guide h1,.guide h2,.guide h3{color:#003366;margin-top:1.2em}
-.guide table{border-collapse:collapse;width:100%;margin:1em 0}
+.guide table {border-collapse: collapse;width: 100%;margin: 1em 0;table-layout: fixed;}
+.guide td:nth-child(1),
+.guide td:nth-child(2),
+.guide td:nth-child(3) {width: 33.33%;}
 .guide th,.guide td{border:1px solid #888;padding:6px 8px;text-align:left}
 .guide th{background:#f0f0f8}
 .guide code{background:#f7f7f7;padding:2px 4px;font-family:Consolas,monospace}
